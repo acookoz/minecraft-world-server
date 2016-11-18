@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var fs = require('file-system'), json;
 var _ = require('underscore');
+const exec = require('child_process').exec;
 
 var oData = "";
 
@@ -52,6 +53,54 @@ var _setData = function() {
 app.use(express.logger('dev'));
 app.use(express.json());
 
+app.post('/minecraftserver/create', function(req, res) {
+  res.status(400);
+
+  var sName = req.body.name;
+
+  if (!sName) {
+    res.send("Name is mandatory");
+    return;
+  }
+
+  // Determine the next Id
+  oData = _getData();
+
+  var sId = 0;
+  _.each(oData.Worlds, function(world) {
+    if (sId < world.Id) {
+      sId = world.Id;
+    }
+  });
+  sId += 1;
+
+  var sDir = "world_" + sId;
+
+  // Execute the creation script
+  exec(minecraftRoot + "scripts/create.sh " + sName + " " + sDir,
+    {
+      shell: "/bin/bash"
+    }, function(error, stdout, stderr) {
+
+
+  });
+
+  // Create the new world
+  var oWorld = {};
+  oWorld.id = sId;
+  oWorld.name = sName;
+  oWorld.createdDate = new Date();
+  _setStatus(oWorld, "stopped");
+  oWorld.dir = sDir;
+  oData.Worlds.push(oWorld);
+
+  _setData();
+
+  res.status(200);
+  res.send(oWorld);
+
+});
+
 app.post('/minecraftserver/:id/rename', function(req, res) {
 
   var sId = req.params.id;
@@ -84,6 +133,7 @@ app.post('/minecraftserver/:id/rename', function(req, res) {
   }
 });
 
+
 app.post('/minecraftserver/:id/start', function(req, res) {
   res.status(400);
 
@@ -109,7 +159,7 @@ app.post('/minecraftserver/:id/start', function(req, res) {
     });
   }
 
-  //_setData();
+  _setData();
 
   res.status(200).send(oWorld);
 });
