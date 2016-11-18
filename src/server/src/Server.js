@@ -68,8 +68,8 @@ app.post('/minecraftserver/create', function(req, res) {
 
   var sId = 0;
   _.each(oData.Worlds, function(world) {
-    if (sId < world.Id) {
-      sId = world.Id;
+    if (sId < world.id) {
+      sId = world.id;
     }
   });
   sId += 1;
@@ -77,7 +77,7 @@ app.post('/minecraftserver/create', function(req, res) {
   var sDir = "world_" + sId;
 
   // Execute the creation script
-  exec(minecraftRoot + "scripts/create.sh " + sName + " " + sDir,
+  exec(minecraftRoot + "scripts/create.sh " + sDir,
     {
       shell: "/bin/bash"
     }, function(error, stdout, stderr) {
@@ -93,6 +93,9 @@ app.post('/minecraftserver/create', function(req, res) {
   _setStatus(oWorld, "stopped");
   oWorld.dir = sDir;
   oData.Worlds.push(oWorld);
+
+  // Set the name on the server
+  _renameWorld(oWorld, sName);
 
   _setData();
 
