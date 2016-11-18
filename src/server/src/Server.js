@@ -81,28 +81,27 @@ app.post('/minecraftserver/create', function(req, res) {
     {
       shell: "/bin/bash"
     }, function(error, stdout, stderr) {
-      console.log(error);
-      console.log(stdout);
-      console.log(stderr);
 
+      // Create the new world
+      var oWorld = {};
+      oWorld.id = sId;
+      oWorld.name = sName;
+      oWorld.createdDate = new Date();
+      _setStatus(oWorld, "stopped");
+      oWorld.dir = sDir;
+      oData.Worlds.push(oWorld);
+
+      // Set the name on the server
+      _renameWorld(oWorld, sName);
+
+      _setData();
+
+      res.status(200);
+      res.send(oWorld);
+      
   });
 
-  // Create the new world
-  var oWorld = {};
-  oWorld.id = sId;
-  oWorld.name = sName;
-  oWorld.createdDate = new Date();
-  _setStatus(oWorld, "stopped");
-  oWorld.dir = sDir;
-  oData.Worlds.push(oWorld);
 
-  // Set the name on the server
-  _renameWorld(oWorld, sName);
-
-  _setData();
-
-  res.status(200);
-  res.send(oWorld);
 
 });
 
