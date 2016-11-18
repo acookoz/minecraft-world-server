@@ -72,7 +72,7 @@ app.post('/minecraftserver/create', function(req, res) {
       sId = world.id;
     }
   });
-  sId += 1;
+  sId = sId + 1;
 
   var sDir = "world_" + sId;
 
@@ -81,7 +81,9 @@ app.post('/minecraftserver/create', function(req, res) {
     {
       shell: "/bin/bash"
     }, function(error, stdout, stderr) {
-
+      console.log(error);
+      console.log(stdout);
+      console.log(stderr);
 
   });
 
