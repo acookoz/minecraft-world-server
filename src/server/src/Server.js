@@ -6,7 +6,7 @@ var _ = require('underscore');
 var oData = "";
 
 const model = 'models/worlds.json';
-const minecraftRoot = '../minecraft/'
+const minecraftRoot = '/home/ec2-user/minecraft/'
 
 var statuses = {
   running: "1",
@@ -30,9 +30,9 @@ var _getWorldById = function(sId) {
 };
 
 var _renameWorld = function(world, name) {
-  var path = minecraftRoot + world.dir + 'server.properties';
+  var path = minecraftRoot + world.dir + '/server.properties';
   var serverFile = fs.readFileSync(path, 'UTF-8');
-  serverFile.replace(/^motd=.*(\n\r)?/, 'motd=' + name );
+  serverFile = serverFile.replace(/^motd=.*/gm, 'motd=' + name );
   fs.writeFileSync(path, serverFile);
 };
 
@@ -73,7 +73,7 @@ app.post('/minecraftserver/:id/rename', function(req, res) {
 
   if (oWorld) {
 
-    _renameWorld(oWorld, name);
+    _renameWorld(oWorld, sName);
 
     oWorld.name = sName;
     _setData();
