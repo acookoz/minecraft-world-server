@@ -80,7 +80,7 @@ app.post('/minecraftserver/:id/rename', function(req, res) {
     res.status(200);
     res.send(oWorld);
   } else {
-    res.send("World not found");
+    res.send("World not found!");
   }
 });
 
