@@ -72,7 +72,8 @@ app.post('/minecraftserver/create', function(req, res) {
       sId = world.id;
     }
   });
-  sId = sId + 1;
+  sId = parseInt(sId) + 1;
+  sId = sId.toString();
 
   var sDir = "world_" + sId;
 
@@ -98,7 +99,7 @@ app.post('/minecraftserver/create', function(req, res) {
 
       res.status(200);
       res.send(oWorld);
-      
+
   });
 
 
