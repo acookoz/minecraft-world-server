@@ -35,7 +35,7 @@ sap.ui.define([
 				// Load the base world data from the URL
 				$.get(this.sBaseUrl,
 					function(response) {
-						this.oWorldsModel = new JSONModel(JSON.parse(response));
+						this.oWorldsModel = new JSONModel(response);
 						this.getView().setModel(this.oWorldsModel);
 						this._onDataLoaded();
 					}.bind(this)
