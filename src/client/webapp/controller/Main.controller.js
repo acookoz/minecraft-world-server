@@ -105,7 +105,7 @@ sap.ui.define([
 				sService = "/create";
 				sOperation = "created";
 			} else {
-				sService = sContext.replace("/world/", "/") + "/rename";
+				sService = "/" + this.getView().getModel().getProperty(sContext).id + "/rename";
 				sOperation = "renamed";
 			}
 			

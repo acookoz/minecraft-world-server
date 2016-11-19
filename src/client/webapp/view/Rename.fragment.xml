@@ -5,7 +5,7 @@
 				backgroundDesign="Transparent">
 				<f:content>
 					<Label id="lblName" text="World Name" labelfor="inputName" required="true"/>
-					<Input id="inputName" value="{worldView>currentName}" valueState="{= ${ worldView>currentName } ? 
+					<Input id="inputName" value="{worldView>/currentName}" valueState="{= ${ worldView>currentName } ? 
 								sap.ui.core.ValueState.Success : sap.ui.core.ValueState.Error }"/>
 				</f:content>
 			</f:SimpleForm>
