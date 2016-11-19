@@ -28,6 +28,8 @@ sap.ui.define([
 			});
 
 			this.getView().setModel(oViewModel, "worldView");
+			
+			this.onWorldsRefresh();
 
 			oViewModel.setProperty("/tableBusyDelay", this.getView().getBusyIndicatorDelay());
 
