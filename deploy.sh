@@ -1,5 +1,6 @@
 #!/bin/bash
 
+pkill node
 git pull
 
 sudo cp -R src/client/webapp/* /var/www/html
