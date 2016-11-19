@@ -16,7 +16,7 @@ sap.ui.define([
 		sBaseUrl: 'http://manmountain84.ddns.net:4123/minecraftserver',
 		oWorldsModel: {},
 		
-		_oRenameDialog: {},
+		_oRenameDialog: "",
 
 		onInit: function() {
 
@@ -81,7 +81,7 @@ sap.ui.define([
 				this._oRenameDialog.addButton(
 					new Button({
 						text: "Cancel",
-						press: this._onRenameCancel.bind(this),
+						press: this._onCancelRename.bind(this),
 						type: "Reject"
 					}));
 				this.getView().addDependent(this._oRenameDialog);
@@ -130,11 +130,13 @@ sap.ui.define([
 			}
 			
 			this._setRenameParams("","");
+			this._oRenameDialog.close();
 			
 		},
 		
 		_onCancelRename: function() {
 			this._setRenameParams("","");
+			this._oRenameDialog.close();
 		},
 		
 		_setRenameParams: function(sCurrentName, sPath) {
