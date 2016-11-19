@@ -14,7 +14,7 @@ sap.ui.define([
 		bMock: false,
 
 		sBaseUrl: 'http://manmountain84.ddns.net:4123/minecraftserver',
-		oWorldsModel: {},
+		oWorldsModel: "",
 
 		_oRenameDialog: "",
 
@@ -31,24 +31,31 @@ sap.ui.define([
 
 			oViewModel.setProperty("/tableBusyDelay", this.getView().getBusyIndicatorDelay());
 
+		},
+
+		onWorldsRefresh: function() {
+			
+			this.getView().byId("worldsTable").setBusy(true);
+			
 			if (!this.bMock) {
 				// Load the base world data from the URL
 				$.get(this.sBaseUrl,
 					function(response) {
-						this.oWorldsModel = new JSONModel(response);
-						this.getView().setModel(this.oWorldsModel);
-						this._onDataLoaded();
+						if (!this.oWorldsModel) {
+							this.oWorldsModel = new JSONModel(response);
+							this.getView().setModel(this.oWorldsModel);
+						} else {
+							this.oWorldsModel.setData(response);
+						}
+						this.getView().byId("worldsTable").setBusy(false);
 					}.bind(this)
 				);
 			} else {
 				this.oWorldsModel = new JSONModel("./model/worlds.json");
 				this.getView().setModel(this.oWorldsModel);
+				this.getView().byId("worldsTable").setBusy(false);
 			}
-
-		},
-
-		onWorldsRefresh: function() {
-			this._onDataLoaded();
+			
 		},
 
 		onCreateWorld: function() {
@@ -121,6 +128,7 @@ sap.ui.define([
 					MessageToast.show("World successfully " + sOperation, {
 						duration: 10000
 					});
+					this.onWorldsRefresh();
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
 					MessageToast.show(errorThrown, {
@@ -154,10 +162,6 @@ sap.ui.define([
 
 		onDelete: function(oEvent) {
 
-		},
-
-		_onDataLoaded: function() {
-			//	this.getView().byId("worldsTable").getBinding("items").refresh();
 		}
 	});
 });
