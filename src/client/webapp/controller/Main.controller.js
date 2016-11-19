@@ -62,7 +62,7 @@ sap.ui.define([
 
 			this._openRenameDialog();
 
-		},
+		}, 
 
 		onRename: function(oEvent) {
 
