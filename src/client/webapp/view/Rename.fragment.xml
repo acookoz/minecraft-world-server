@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<Dialog title="Enter a name for this world" contentWidth="40rem">
+		<content>
+			<f:SimpleForm columnsL="1" editable="true" id="renameWorldFormForm" labelSpanL="3" labelSpanM="3" layout="ResponsiveGridLayout"
+				backgroundDesign="Transparent">
+				<f:content>
+					<Label id="lblName" text="World Name" labelfor="inputName" required="true"/>
+					<Input id="inputName" value="{worldView>currentName}" valueState="{= ${ worldView>currentName } ? 
+								sap.ui.core.ValueState.Success : sap.ui.core.ValueState.Error"/>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+	</Dialog>
+</core:FragmentDefinition>

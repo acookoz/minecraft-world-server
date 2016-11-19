@@ -1,0 +1,20 @@
+{
+  "Worlds": [
+    {
+      "id": "1",
+      "name": "First World",
+      "createdDate": "20161113000000",
+      "stateCode": "9",
+      "state": "Stopped",
+      "dir": "first-world"
+    },
+    {
+      "id": "2",
+      "name": "Second World",
+      "createdDate": "20161113000000",
+      "stateCode": "1",
+      "state": "Running",
+      "dir": "second-world"
+    }
+  ]
+}

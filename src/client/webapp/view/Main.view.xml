@@ -1,0 +1,71 @@
+<mvc:View controllerName="mmd.minecraft.controller.Main" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
+	<App>
+		<pages>
+			<Page title="SuperGirlyGmr06 and ManMountain84's Worlds">
+				<content>
+					<Table id="worldsTable" width="auto" class="sapUiResponsiveMargin" noDataText="No Worlds Found"
+						busyIndicatorDelay="{worldView>/tableBusyDelay}" fixedLayout="false"
+						items="{
+							path: '/Worlds',
+							sorter: {
+								path: 'stateCode'
+							}
+						}">
+						<headerToolbar>
+							<Toolbar>
+								<Title id="worldsHeader" text="Minecraft Worlds"/>
+								<ToolbarSpacer/>
+								<Button press="onWorldsRefresh" icon="sap-icon://refresh"/>
+								<Button press="onCreateWorld" icon="sap-icon://add" text="Create New World"/>
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column id="colId">
+								<Text text="Id" id="colIdHeader"/>
+							</Column>
+							<Column id="colName">
+								<Text text="World Name" id="colNameHeader"/>
+							</Column>
+							<Column id="colCreatedDate">
+								<Text text="Created Date" id="colCreatedDateHeader"/>
+							</Column>
+							<Column id="colStatus">
+								<Text text="Status" id="colStatusHeader"/>
+							</Column>
+							<Column id="colActions">
+								<Text text="Actions" id="colActionsHeader"/>
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem type="Inactive">
+								<cells>
+									<Text text="{id}" id="worldId"/>
+									<Text text="{name}" id="worldName"/>
+									<Text text="{createdDate}" id="worldCreatedDate"/>
+									<ObjectStatus 
+										icon="{ parts : [ {path: 'state'} ], formatter: '.formatter.stateIcon' }"
+										state="{ parts : [ {path: 'state'} ], formatter: '.formatter.state' }"
+										text="{state}"/>
+									<OverflowToolbar id="actionToolbar">
+										<OverflowToolbarButton
+											id="btnStop" text="Stop" tooltip="Stop" icon="sap-icon://stop" press="onStop"
+											enabled="{= ${stateCode} === '1' }"/>
+										<OverflowToolbarButton 
+											id="btnRename" text="Rename" tooltip="Rename" icon="sap-icon://edit" press="onRename"
+											/>
+										<OverflowToolbarButton
+											id="btnStart" text="Start" tooltip="Start" icon="sap-icon://play" press="onStart"
+											enabled="{= ${stateCode} !== '1' }"/>
+										<OverflowToolbarButton
+											id="btnDelete" text="Delete" tooltip="Delete" icon="sap-icon://delete" press="onDelete"
+											enabled="{= ${stateCode} !== '1' }"/>
+									</OverflowToolbar>
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+				</content>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
