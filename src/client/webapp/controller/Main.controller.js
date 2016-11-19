@@ -8,14 +8,14 @@ sap.ui.define([
 	"use strict";
 
 	return Controller.extend("mmd.minecraft.controller.Main", {
-		
+
 		formatter: formatter,
 
 		bMock: false,
 
 		sBaseUrl: 'http://manmountain84.ddns.net:4123/minecraftserver',
 		oWorldsModel: {},
-		
+
 		_oRenameDialog: "",
 
 		onInit: function() {
@@ -44,32 +44,32 @@ sap.ui.define([
 				this.oWorldsModel = new JSONModel("./model/worlds.json");
 				this.getView().setModel(this.oWorldsModel);
 			}
-			
+
 		},
-		
+
 		onWorldsRefresh: function() {
 			this._onDataLoaded();
 		},
-		
+
 		onCreateWorld: function() {
-			
+
 			this._openRenameDialog();
-			
+
 		},
-		
+
 		onRename: function(oEvent) {
-			
+
 			var sPath = oEvent.getSource().getBindingContext().sPath;
-			var sCurrentName = 
+			var sCurrentName =
 				this.oWorldsModel.getProperty(sPath && "name");
-				
+
 			this._setRenameParams(sCurrentName, sPath);
 
 			this._openRenameDialog();
 		},
-		
+
 		_openRenameDialog: function() {
-		
+
 			if (!this._oRenameDialog) {
 				this._oRenameDialog = sap.ui.xmlfragment("mmd.minecraft.view.Rename", this);
 				this._oRenameDialog.addButton(
@@ -88,18 +88,17 @@ sap.ui.define([
 			}
 
 			this._oRenameDialog.open();
-			
+
 		},
-		
-		
+
 		_onDoRename: function() {
-			
+
 			var sContext = this.getView().getModel("worldView").getProperty("/renameContext");
-			var sName	 = this.getView().getModel("worldView").getProperty("/currentName");
+			var sName = this.getView().getModel("worldView").getProperty("/currentName");
 
 			var sService = "";
 			var sOperation = "";
-			
+
 			// If no context, do a create
 			if (!sContext) {
 				sService = "/create";
@@ -108,56 +107,57 @@ sap.ui.define([
 				sService = "/" + this.getView().getModel().getProperty(sContext).id + "/rename";
 				sOperation = "renamed";
 			}
-			
-			
-			if (!sContext) {
-				// Call the service
-				$.post(
-					this.sBaseUrl + sService,
-					JSON.stringify(
-						{
-							"name": sName
-						}
-					),
-					function(data, status, err) {
-						if (status === "success") {
-							MessageToast.show("World successfully " + sOperation, { duration: 10000 } );
-						} else {
-							MessageToast.show(err, { duration: 20000 });
-						}
-					}
-				);
-			}
-			
-			this._setRenameParams("","");
+
+			// Call the service
+			$.ajax({
+				url: this.sBaseUrl + sService,
+				type: "POST",
+				data: JSON.stringify({
+					name: sName
+				}),
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function() {
+					MessageToast.show("World successfully " + sOperation, {
+						duration: 10000
+					});
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					MessageToast.show(errorThrown, {
+						duration: 20000
+					});
+				}
+			});
+
+			this._setRenameParams("", "");
 			this._oRenameDialog.close();
-			
+
 		},
-		
+
 		_onCancelRename: function() {
-			this._setRenameParams("","");
+			this._setRenameParams("", "");
 			this._oRenameDialog.close();
 		},
-		
+
 		_setRenameParams: function(sCurrentName, sPath) {
 			this.getView().getModel("worldView").setProperty("/currentName", sCurrentName);
 			this.getView().getModel("worldView").setProperty("/renameContext", sPath);
 		},
-		
+
 		onStop: function(oEvent) {
-			
+
 		},
-		
+
 		onStart: function(oEvent) {
-			
+
 		},
-		
+
 		onDelete: function(oEvent) {
-			
+
 		},
-		
+
 		_onDataLoaded: function() {
-		//	this.getView().byId("worldsTable").getBinding("items").refresh();
+			//	this.getView().byId("worldsTable").getBinding("items").refresh();
 		}
 	});
 });
