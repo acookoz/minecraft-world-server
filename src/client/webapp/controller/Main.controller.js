@@ -118,7 +118,7 @@ sap.ui.define([
 				sOperation = "created";
 			} else {
 				sService = "/" + this.getView().getModel().getProperty(sContext).id + "/rename";
-				sOperation = "renamed";
+				sOperation = "renamed - change will take effect on next restart";
 			}
 
 			// Call the service
