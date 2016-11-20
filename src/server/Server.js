@@ -59,6 +59,8 @@ var _setData = function() {
 };
 
 var _start = function(world) {
+	
+	console.log(minecraftRoot + "/scripts/start.sh " + minecraftRoot + "/" + world.dir);
 
 	// Execute the start script
 	exec(minecraftRoot + "/scripts/start.sh " + minecraftRoot + "/" + world.dir, {
