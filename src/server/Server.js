@@ -29,9 +29,7 @@ var _getData = function() {
 };
 
 var _getWorldById = function(sId) {
-	if (!oData) {
-		oData = _getData();
-	}
+	oData = _getData();
 
 	return _.find(oData.Worlds, function(world) {
 		return world.id === sId
