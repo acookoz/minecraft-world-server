@@ -3,6 +3,7 @@ var app = express();
 var fs = require('file-system'),
 	json;
 var _ = require('underscore');
+var sleep = require('sleep');
 const exec = require('child_process').exec;
 
 app.use(function(req, res, next) {
@@ -195,22 +196,20 @@ app.post('/minecraftserver/:id/start', function(req, res) {
 	/* If we found any, stop them */
 	if (aStarted.length > 0) {
 		_.each(aStarted, function(world) {
-			_setStatus(world, "stopping");
+			_setStatus(world, "stopped");
 
 			// Kill all servers (will only be one running anyway)
 			exec(minecraftRoot + "scripts/stop.sh minecraft_server.jar", {
 				shell: "/bin/bash"
 			}, function(error, stdout, stderr) {
 
-				//Start the new world
-				_start(oWorld);
 			});
 
 		});
-	} else {
-		console.log("getting here");
-		_start(oWorld);
 	}
+	
+	sleep(5000);
+	_start(oWorld);
 
 	res.status(200).send(oWorld);
 });
@@ -233,11 +232,12 @@ app.post('/minecraftserver/:id/stop', function(req, res) {
 		shell: "/bin/bash"
 	}, function(error, stdout, stderr) {
 
-		//Stop the specified world
-		_setStatus(oWorld, "stopped");
-		_setData();
-		res.status(200).send(oWorld);
 	});
+	
+	//Stop the specified world
+	_setStatus(oWorld, "stopped");
+	_setData();
+	res.status(200).send(oWorld);
 
 });
 app.get('/minecraftserver', function(req, res) {
