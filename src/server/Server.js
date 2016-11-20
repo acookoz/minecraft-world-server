@@ -195,7 +195,7 @@ app.post('/minecraftserver/:id/start', function(req, res) {
 	console.log(aStarted);
 
 	/* If we found any, stop them */
-	if (aStarted) {
+	if (aStarted.length > 0) {
 		_.each(aStarted, function(world) {
 			_setStatus(world, "stopping");
 
@@ -210,6 +210,7 @@ app.post('/minecraftserver/:id/start', function(req, res) {
 
 		});
 	} else {
+		console.log("getting here");
 		_start(oWorld);
 	}
 
