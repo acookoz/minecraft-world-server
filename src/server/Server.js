@@ -44,7 +44,7 @@ var _renameWorld = function(world, name) {
 };
 
 var _setStatus = function(world, state) {
-	world.stateCode = statuses[state];
+	world.stateCode = statuses[state.toLowerCase()];
 	world.state = state.charAt(0).toUpperCase() + state.substr(1).toLowerCase();
 
 	console.log("setting world " + world.id + " to " + state);
