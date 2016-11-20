@@ -19,6 +19,10 @@ sap.ui.define([
 		_oRenameDialog: "",
 
 		onInit: function() {
+			
+			var oApp = this.getView().byId("mainApp");
+			oApp.addStyleClass("myBackgroundStyle");
+			oApp.setBackgroundImage("img/background.jpg");
 
 			// Instantiate the UI model
 			var oViewModel = new JSONModel({
@@ -131,7 +135,7 @@ sap.ui.define([
 						duration: 10000
 					});
 					this.onWorldsRefresh();
-				},
+				}.bind(this),
 				error: function(XMLHttpRequest, textStatus, errorThrown) {
 					MessageToast.show(errorThrown, {
 						duration: 20000

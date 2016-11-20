@@ -1,7 +1,7 @@
 <mvc:View controllerName="mmd.minecraft.controller.Main" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m">
-	<App>
+	<App id="mainApp">
 		<pages>
-			<Page title="SuperGirlyGmr06 and ManMountain84's Worlds">
+			<Page title="SuperGirlyGmr06 and ManMountain84's Worlds" backgroundDesign="Transparent" class="myBackgroundStyle">
 				<content>
 					<Table id="worldsTable" width="auto" class="sapUiResponsiveMargin" noDataText="No Worlds Found"
 						busyIndicatorDelay="{worldView>/tableBusyDelay}" fixedLayout="false"
