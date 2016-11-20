@@ -9,6 +9,11 @@
 							path: '/Worlds',
 							sorter: {
 								path: 'stateCode'
+							},
+							filter: {
+								path: 'stateCode',
+								operation: 'NE',
+								value1: '99'
 							}
 						}">
 						<headerToolbar>
