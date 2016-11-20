@@ -16,4 +16,4 @@ cd ~/web-server/
 mv models/worlds.json models/worlds.json.example
 mv models/worlds.json.bak models/worlds.json
 
-node Server.js &
+node Server.js >> logs.txt &
