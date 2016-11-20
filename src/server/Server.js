@@ -61,7 +61,7 @@ var _setData = function() {
 var _start = function(world) {
 
 	// Execute the start script
-	exec(world.dir + "/start.sh", {
+	exec(minecraftRoot + "/scripts/start.sh " + minecraftRoot + "/" + world.dir, {
 		shell: "/bin/bash"
 	}, function(error, stdout, stderr) {
 
