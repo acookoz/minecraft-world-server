@@ -65,7 +65,7 @@ var _start = function(world) {
 		shell: "/bin/bash"
 	}, function(error, stdout, stderr) {
 
-		_setStatus(world, "RUNNING");
+		_setStatus(world, "running");
 		_setData();
 
 	});
