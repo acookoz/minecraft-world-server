@@ -74,7 +74,7 @@ sap.ui.define([
 
 			var sPath = oEvent.getSource().getBindingContext().sPath;
 			var sCurrentName =
-				this.oWorldsModel.getProperty(sPath && "name");
+				this.oWorldsModel.getProperty(sPath + "/name");
 
 			this._setRenameParams(sCurrentName, sPath);
 
@@ -159,15 +159,72 @@ sap.ui.define([
 		},
 
 		onStop: function(oEvent) {
-
+			
+			var sPath = oEvent.getSource().getBindingContext().sPath;
+			var sService = "/" + this.getView().getModel().getProperty(sPath).id + "/stop";
+			
+			// Call the service
+			$.ajax({
+				url: this.sBaseUrl + sService,
+				type: "POST",
+				success: function() {
+					MessageToast.show("World successfully stopped", {
+						duration: 10000
+					});
+					this.onWorldsRefresh();
+				}.bind(this),
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					MessageToast.show(errorThrown, {
+						duration: 20000
+					});
+				}
+			});
 		},
 
 		onStart: function(oEvent) {
-
+			
+			var sPath = oEvent.getSource().getBindingContext().sPath;
+			var sService = "/" + this.getView().getModel().getProperty(sPath).id + "/start";
+			
+			// Call the service
+			$.ajax({
+				url: this.sBaseUrl + sService,
+				type: "POST",
+				success: function() {
+					MessageToast.show("World successfully started", {
+						duration: 10000
+					});
+					this.onWorldsRefresh();
+				}.bind(this),
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					MessageToast.show(errorThrown, {
+						duration: 20000
+					});
+				}
+			});
 		},
 
 		onDelete: function(oEvent) {
-
+			
+			var sPath = oEvent.getSource().getBindingContext().sPath;
+			var sService = "/" + this.getView().getModel().getProperty(sPath).id + "/delete";
+			
+			// Call the service
+			$.ajax({
+				url: this.sBaseUrl + sService,
+				type: "POST",
+				success: function() {
+					MessageToast.show("World successfully deleted (but talk to admin if you want it back)", {
+						duration: 10000
+					});
+					this.onWorldsRefresh();
+				}.bind(this),
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					MessageToast.show(errorThrown, {
+						duration: 20000
+					});
+				}
+			});
 		}
 	});
 });
